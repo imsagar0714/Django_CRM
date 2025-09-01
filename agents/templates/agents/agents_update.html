@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+<section class="bg-gray-50 py-16">
+  <div class="container px-5 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap bg-white shadow-lg rounded-lg overflow-hidden">
+      
+      <!-- Left content -->
+      <div class="lg:w-1/2 w-full p-8">
+        <h2 class="text-sm font-semibold text-indigo-600 tracking-widest mb-2">AGENT</h2>
+        <h1 class="text-gray-900 text-3xl font-bold mb-6">{{ agent.user.username }}</h1>
+        
+        <!-- Tabs -->
+        <div class="flex mb-6 border-b border-gray-200">
+          <a href="{% url 'agents:agents-detail' agent.pk %}" class="flex-grow text-center py-2 text-lg font-medium text-gray-500 hover:text-indigo-500 border-b-2 border-transparent hover:border-indigo-500 transition">Overview</a>
+          <a class="flex-grow text-center py-2 text-lg font-medium text-gray-500 hover:text-indigo-500 border-b-2 border-transparent hover:border-indigo-500 transition">Reviews</a>
+          <a href="{% url 'agents:agents-update' agent.pk %}" class="flex-grow text-center py-2 text-lg font-medium text-indigo-600 border-b-2 border-indigo-500">Update Details</a>
+        </div>
+        
+        <!-- Form -->
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded transition">Submit</button>
+        </form>
+        
+        <!-- Delete button -->
+        <a href="{% url 'agents:agents-delete' agent.pk %}" class="block mt-4 w-full text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition">Delete Agent</a>
+      </div>
+      
+      <!-- Right image -->
+      <div class="lg:w-1/2 w-full">
+        <img alt="agent image" class="w-full h-full object-cover object-center" src="https://dummyimage.com/400x400">
+      </div>
+      
+    </div>
+  </div>
+</section>
+{% endblock content %}

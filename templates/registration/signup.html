@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load tailwind_filters %}
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
+        
+        <!-- Title -->
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+            Create an Account
+        </h2>
+
+        <!-- Signup Form -->
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <!-- Signup Button -->
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300 ease-in-out">
+                Signup
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <hr class="my-6">
+
+        <!-- Already have an account -->
+        <p class="text-center text-gray-600">
+            Already have an account? 
+            <a href="{% url 'login' %}" class="text-blue-600 font-semibold hover:underline">
+                Login
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock content %}
