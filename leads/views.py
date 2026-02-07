@@ -113,43 +113,6 @@ class LeadDeleteView(OrganiserAndLoginRequiredMixin,generic.DeleteView):
         return Lead.objects.filter(organisation=user.userprofile)
     
 
-def landing_page(request):
-    return render(request,"landing.html")
-
-def lead_list(request):
-    leads=Lead.objects.all()
-    context={
-        "leads":leads
-    }
-    return render(request,"leads/lead_list.html",context) 
-
-def lead_detail(request,pk):
-    print(pk)
-    lead=Lead.objects.get(id=pk)
-    context={
-        "lead":lead
-    }
-    return render(request,"leads/lead_detail.html",context) 
-
-def lead_update(request,pk):
-    lead=Lead.objects.get(id=pk)
-    form=LeadModelForm(instance=lead)
-    if request.method =="POST":
-        form=LeadModelForm(request.POST,instance=lead)
-        if form.is_valid():
-            form.save()
-            return redirect("/leads")
-    context={
-        "form":form,
-        "lead":lead
-    }
-    return render(request,"leads/lead_update.html",context)
-
-def lead_delete(request,pk):
-    lead=Lead.objects.get(id=pk)
-    lead.delete()
-    return redirect("/leads")
-
 
 class AssignAgentView(OrganiserAndLoginRequiredMixin, generic.FormView):
     template_name = "leads/assign_agent.html"
@@ -235,17 +198,3 @@ class LeadCategoryUpdateView(LoginRequiredMixin,generic.UpdateView):
     def get_success_url(self):
         return reverse("leads:lead-detail",kwargs= { "pk" :  self.get_object().id})
     
-    
-
-# def lead_create(request):
-#     form=LeadModelForm()
-#     if request.method =="POST":
-#         print('recieving a post request')
-#         form=LeadModelForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("/leads")
-#     context={
-#         "form":form
-#     }
-#     return render(request,"leads/lead_create.html",context)
